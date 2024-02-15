@@ -1,5 +1,11 @@
 vue/node_modules
 vue/dist
+react/node_modules
+react/dist
+ts-client/lib
+ts-client/node_modules
+ts-client/package-lock.json
+
 release/
 .idea/
 .vscode/
