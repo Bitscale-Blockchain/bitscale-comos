@@ -33,7 +33,10 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 	solomachine "github.com/cosmos/ibc-go/v8/modules/light-clients/06-solomachine"
 	ibctm "github.com/cosmos/ibc-go/v8/modules/light-clients/07-tendermint"
+
 	// this line is used by starport scaffolding # ibc/app/import
+	bitscalemodule "bitscale/x/bitscale/module"
+	bitscalemoduletypes "bitscale/x/bitscale/types"
 )
 
 // registerIBCModules register IBC keepers and non dependency inject modules.
@@ -156,6 +159,8 @@ func (app *App) registerIBCModules() {
 		AddRoute(icacontrollertypes.SubModuleName, icaControllerIBCModule).
 		AddRoute(icahosttypes.SubModuleName, icaHostIBCModule)
 
+	bitscaleIBCModule := ibcfee.NewIBCMiddleware(bitscalemodule.NewIBCModule(app.BitscaleKeeper), app.IBCFeeKeeper)
+	ibcRouter.AddRoute(bitscalemoduletypes.ModuleName, bitscaleIBCModule)
 	// this line is used by starport scaffolding # ibc/app/module
 
 	app.IBCKeeper.SetRouter(ibcRouter)
